@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task-3 | Advanced Styling & JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .quiz-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #4a90e2;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .options button:hover {
+      background: #4a90e2;
+      color: white;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .api-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .api-container button {
+      padding: 10px 15px;
+      border: none;
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .api-container button:hover {
+      background: #357abd;
+    }
+    .joke {
+      margin-top: 15px;
+      font-style: italic;
+    }
+    @media (max-width: 768px) {
+      body {
+        font-size: 0.95rem;
+      }
+      .quiz-container, .api-container {
+        padding: 15px;
+      }
+      .options button {
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 480px) {
+      header {
+        font-size: 1rem;
+        padding: 10px;
+      }
+      .question {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Task-3: Advanced Styling & JavaScript</h1>
+  </header>
+  <main>
+    <section class="quiz-container">
+      <h2>Quiz: Test Your Knowledge</h2>
+      <div id="quiz">
+        <p class="question" id="question">Loading question...</p>
+        <div class="options" id="options"></div>
+        <p class="result" id="result"></p>
+      </div>
+    </section>
+    <section class="api-container">
+      <h2>Get a Random Joke</h2>
+      <button onclick="getJoke()">Fetch Joke</button>
+      <p class="joke" id="joke"></p>
+    </section>
+  </main>
+  <script>
+    const quizData = [
+      {
+        question: "Which language is used to style web pages?",
+        options: ["HTML", "CSS", "JavaScript", "Python"],
+        answer: "CSS"
+      },
+      {
+        question: "Which tag is used to create a hyperlink in HTML?",
+        options: ["<a>", "<link>", "<href>", "<url>"],
+        answer: "<a>"
+      },
+      {
+        question: "Which method is used to fetch data from an API in JavaScript?",
+        options: ["getData()", "fetch()", "callAPI()", "request()"],
+        answer: "fetch()"
+      }
+    ];
+    let currentQuestion = 0;
+    let score = 0;
+    function loadQuestion() {
+      if (currentQuestion < quizData.length) {
+        const q = quizData[currentQuestion];
+        document.getElementById("question").textContent = q.question;
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+        q.options.forEach(opt => {
+          const button = document.createElement("button");
+          button.textContent = opt;
+          button.onclick = () => checkAnswer(opt);
+          optionsDiv.appendChild(button);
+        });
+        document.getElementById("result").textContent = "";
+      } else {
+        document.getElementById("quiz").innerHTML = 
+          `<h3>Quiz Completed!</h3>
+           <p>Your Score: ${score} / ${quizData.length}</p>`;
+      }
+    }
+    function checkAnswer(selected) {
+      const correct = quizData[currentQuestion].answer;
+      if (selected === correct) {
+        score++;
+        document.getElementById("result").textContent = "✅ Correct!";
+      } else {
+        document.getElementById("result").textContent = `❌ Wrong! Correct answer: ${correct}`;
+      }
+      currentQuestion++;
+      setTimeout(loadQuestion, 1000);
+    }
+    loadQuestion();
+    async function getJoke() {
+      document.getElementById("joke").textContent = "Loading...";
+      try {
+        const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+        const data = await response.json();
+        document.getElementById("joke").textContent = `${data.setup} - ${data.punchline}`;
+      } catch (error) {
+        document.getElementById("joke").textContent = "Failed to fetch joke.";
+      }
+    }
+  </script>
+</body>
+</html>
