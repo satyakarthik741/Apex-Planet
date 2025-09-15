@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio — Projects, To-Do, Products</title>
+<style>
+:root{--accent:#0ea5ff;--muted:#94a3b8;--bg:#081226;--card:#071028}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#081426 0%,#050914 100%);color:#e6eef8}
+.container{max-width:1100px;margin:24px auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#00b4ff);display:flex;align-items:center;justify-content:center;color:#041022;font-weight:800}
+nav{display:flex;gap:8px}
+nav a{color:#cfeeff;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:700}
+nav a.active{background:rgba(255,255,255,0.03);color:var(--accent)}
+.main{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.6)}
+.hero{display:flex;flex-direction:column;gap:12px}
+.hero h1{margin:0;font-size:28px}
+.hero p{margin:0;color:var(--muted);line-height:1.6}
+.section{margin-top:14px}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.project{display:flex;flex-direction:column;gap:8px}
+.project img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.contact-form{display:flex;flex-direction:column;gap:8px}
+.contact-form input,.contact-form textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:#e6eef8}
+.btn{background:var(--accent);color:#041022;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:800}
+.small{font-size:13px;color:var(--muted)}
+.sidebar{display:flex;flex-direction:column;gap:12px}
+.todo-list{display:flex;flex-direction:column;gap:8px}
+.todo-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+.todo-item.complete{opacity:0.6;text-decoration:line-through}
+.controls{display:flex;gap:8px}
+.products{margin-top:8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.select,input[type=range]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.product-card{padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);display:flex;flex-direction:column;gap:8px}
+.product-card img{height:120px;object-fit:cover;border-radius:8px}
+.footer{margin-top:22px;color:var(--muted);text-align:center;font-size:13px}
+@media (max-width:1000px){.main{grid-template-columns:1fr}}
+@media (max-width:560px){.projects-grid{grid-template-columns:1fr}.products-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="brand"><div class="logo">HC</div><div><div style="font-weight:800">Harsha</div><div class="small">Front-end Developer</div></div></div>
+<nav id="nav"><a href="#about" data-target="about" class="active">About</a><a href="#projects" data-target="projects">Projects</a><a href="#contact" data-target="contact">Contact</a></nav>
+</header>
+<div class="main">
+<div>
+<section id="about" class="card section">
+<div class="hero"><h1>Hi, I'm Harsha</h1><p>I build responsive web interfaces using modern HTML, CSS and JavaScript. I enjoy creating small projects that solve real problems and improve user experiences.</p>
+<div class="section"><div style="font-weight:800;margin-bottom:8px">Skills</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe9ff;padding:6px 10px;font-weight:700">HTML</span><span class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe9ff;padding:6px 10px;font-weight:700">CSS</span><span class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe9ff;padding:6px 10px;font-weight:700">JavaScript</span><span class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe9ff;padding:6px 10px;font-weight:700">React</span></div></div>
+</div>
+</section>
+<section id="projects" class="card section">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">Projects</div><div class="small">Responsive, interactive</div></div>
+<div class="projects-grid" id="projectsGrid"></div>
+</section>
+<section id="contact" class="card section">
+<div style="font-weight:800">Contact</div>
+<form class="contact-form" id="contactForm">
+<input id="name" placeholder="Your name" required />
+<input id="email" placeholder="Email" required />
+<textarea id="message" rows="4" placeholder="Message" required></textarea>
+<button class="btn" type="submit">Send</button>
+</form>
+</section>
+<section class="card section">
+<div style="font-weight:800;margin-bottom:8px">Live Demos</div>
+<div class="small">Below are two interactive apps: a To-Do app that uses localStorage and a Product listing with filters and sorting.</div>
+<div style="margin-top:12px">
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><div style="font-weight:800">To-Do</div><div class="small">(saved to localStorage)</div></div>
+<div style="display:flex;gap:8px;margin-bottom:8px"><input id="todoInput" placeholder="Add new task" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8" /><button id="addTodo" class="btn">Add</button></div>
+<div id="todoList" class="todo-list"></div>
+</div>
+</section>
+</div>
+<aside class="sidebar">
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">Profile</div><div class="small">Available for projects</div></div>
+<div style="margin-top:12px;color:var(--muted);line-height:1.5">Focused on building performant, accessible web apps. Reach out via the contact form or GitHub link.</div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">Products</div><div class="small">Filter & sort</div></div>
+<div class="filters" style="margin-top:10px"><select id="categoryFilter"><option value="all">All categories</option></select><select id="sortSelect"><option value="default">Default</option><option value="price-asc">Price ↑</option><option value="price-desc">Price ↓</option><option value="rating-desc">Rating</option></select></div>
+<div class="products" id="productsRoot">
+<div class="products-grid" id="productsGrid"></div>
+</div>
+</div>
+</aside>
+</div>
+<div class="footer">Made with HTML, CSS & JavaScript · © 2025</div>
+</div>
+<script>
+const nav=document.querySelectorAll('#nav a');nav.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();nav.forEach(x=>x.classList.remove('active'));a.classList.add('active');const t=a.dataset.target;document.getElementById(t).scrollIntoView({behavior:'smooth'})}))
+const projects=[{title:'Portfolio Site',desc:'Responsive multi-section portfolio',img:'https://picsum.photos/seed/p1/800/600'},{title:'Task Manager',desc:'To-do app with localStorage',img:'https://picsum.photos/seed/p2/800/600'},{title:'Product Store',desc:'Filtering and sorting UI',img:'https://picsum.photos/seed/p3/800/600'},{title:'Image Carousel',desc:'Interactive carousel using JS',img:'https://picsum.photos/seed/p4/800/600'}];const projectsGrid=document.getElementById('projectsGrid');projects.forEach(p=>{const el=document.createElement('div');el.className='project card';el.innerHTML=`<img src="${p.img}" alt="${p.title}"/><div><h4 style="margin:0">${p.title}</h4><div class="small">${p.desc}</div></div>`;projectsGrid.appendChild(el)})
+const todoKey='harsha_todos';const todoInput=document.getElementById('todoInput');const addTodo=document.getElementById('addTodo');const todoList=document.getElementById('todoList');function loadTodos(){const raw=localStorage.getItem(todoKey);return raw?JSON.parse(raw):[]}
+function saveTodos(list){localStorage.setItem(todoKey,JSON.stringify(list))}
+function renderTodos(){todoList.innerHTML='';const items=loadTodos();items.forEach((it,idx)=>{const div=document.createElement('div');div.className='todo-item'+(it.done?' complete':'');const chk=document.createElement('input');chk.type='checkbox';chk.checked=it.done;chk.addEventListener('change',()=>{items[idx].done=chk.checked;saveTodos(items);renderTodos()});const span=document.createElement('div');span.style.flex='1';span.textContent=it.text;const del=document.createElement('button');del.className='btn';del.style.background='transparent';del.style.border='1px solid rgba(255,255,255,0.04)';del.textContent='Delete';del.addEventListener('click',()=>{items.splice(idx,1);saveTodos(items);renderTodos()});div.appendChild(chk);div.appendChild(span);div.appendChild(del);todoList.appendChild(div)})}
+addTodo.addEventListener('click',()=>{const v=todoInput.value.trim();if(!v) return;const list=loadTodos();list.unshift({text:v,done:false});saveTodos(list);todoInput.value='';renderTodos()});todoInput.addEventListener('keydown',e=>{if(e.key==='Enter'){addTodo.click()}});renderTodos()
+const products=[{id:1,title:'Wireless Headphones',category:'Electronics',price:79.99,rating:4.5,img:'https://picsum.photos/seed/a1/600/400'},{id:2,title:'Coffee Mug',category:'Home',price:12.5,rating:4.1,img:'https://picsum.photos/seed/a2/600/400'},{id:3,title:'Running Shoes',category:'Fashion',price:59.99,rating:4.7,img:'https://picsum.photos/seed/a3/600/400'},{id:4,title:'Smartwatch',category:'Electronics',price:149.99,rating:4.3,img:'https://picsum.photos/seed/a4/600/400'},{id:5,title:'Desk Lamp',category:'Home',price:34.99,rating:4.0,img:'https://picsum.photos/seed/a5/600/400'},{id:6,title:'Backpack',category:'Fashion',price:45.0,rating:4.2,img:'https://picsum.photos/seed/a6/600/400'}]
+const productsGridEl=document.getElementById('productsGrid');const categoryFilter=document.getElementById('categoryFilter');const sortSelect=document.getElementById('sortSelect');function populateCategories(){const cats=Array.from(new Set(products.map(p=>p.category)));cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;categoryFilter.appendChild(o)})}
+function renderProducts(){let list=products.slice();const cat=categoryFilter.value;if(cat!=='all') list=list.filter(p=>p.category===cat);const sort=sortSelect.value;if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);else if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);else if(sort==='rating-desc') list.sort((a,b)=>b.rating-b.rating?b.rating-a.rating:0);productsGridEl.innerHTML='';list.forEach(p=>{const card=document.createElement('div');card.className='product-card';card.innerHTML=`<img src="${p.img}" alt="${p.title}"/><div style="font-weight:800">${p.title}</div><div class="small">${p.category} · ⭐ ${p.rating}</div><div style="font-weight:800">$${p.price.toFixed(2)}</div>`;productsGridEl.appendChild(card)})}
+categoryFilter.addEventListener('change',renderProducts);sortSelect.addEventListener('change',renderProducts);populateCategories();renderProducts()
+const contactForm=document.getElementById('contactForm');contactForm.addEventListener('submit',e=>{e.preventDefault();alert('Message sent!');contactForm.reset()})
+</script>
+</body>
+</html>
